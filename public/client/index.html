@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="DoMeAFavorApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Do Me a Favor</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- AngularJS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular.js"></script>
+    <!-- AngularJS Routing library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular-route.js"></script>
+    <!-- Custom AngularJS Scripts -->
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+    <script src="views/home/home.controller.js"></script>
+    <script src="views/home/favor.controller.js"></script>
+
+
+</head>
+<body>
+
+    <div ng-include="'views/header/header.view.html'"></div>
+
+    <div ng-view></div>
+
+
+    <!-- jQuery Core javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <!-- Bootstrap javascript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</body>
+</html>

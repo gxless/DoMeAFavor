@@ -1,0 +1,128 @@
+<div class="container contentWrapper">
+
+    <div class="row primaryContent">
+        <div class="col-xs-12 noPadding">
+            <h3>My Favor 1 &nbsp;
+                <button ng-click="showNewPost()" class="btn tagBtn">
+                    <span class="glyphicon glyphicon-plus plusIcon"></span> Post
+                </button>
+                <button ng-click="disjoin()" class="btn tagBtn">
+                    <span class="glyphicon glyphicon-remove plusIcon"></span> Disjoin
+                </button>
+            </h3>
+            <p ng-show="!join" class="alert alert-danger">
+                <span>Are you Sure?</span><br/>
+                <span class="text-primary deleteText">disjoin</span> or
+                <span class="text-primary deleteText">cancel</span>
+            </p>
+            <p><span class="text-info">Michael</span> posted on Feb 2, 2016</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                printer took a galley of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into electronic typesetting,
+                remaining essentially unchanged. It was popularised in the 1960s with the release
+                of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+        </div>
+
+        <div ng-show="newPost" class="col-xs-12 noPadding horizontalLine">
+            <h4 class="newPostTitle">{{newPostDate}} <span class="text-grey">(New Post)</span>
+            </h4>
+
+            <form>
+
+                <div class="editArea form-group">
+                    <span class="glyphicon glyphicon-picture"></span>
+                    <textarea class="form-control noBorder" rows="9" placeholder="write content here"></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 text-align-left">
+                        <button type="submit" class="btn submitBtn">Post</button>
+                    </div>
+                    <div class="col-xs-6 text-align-right">
+                        <button ng-click="notShowNewPost()" type="button" class="btn cancelBtn">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-xs-12 noPadding horizontalLine">
+            <div>
+                <h4>{{title1}} &nbsp;
+                    <button ng-click="showEdit()" class="btn tagBtn">
+                        <span class="glyphicon glyphicon-pencil plusIcon"></span> Edit
+                    </button>
+                    <button ng-show="edit" class="btn tagBtn">
+                        <span class="glyphicon glyphicon-remove plusIcon"></span> Delete
+                    </button>
+                </h4>
+                <p>{{content1}}</p>
+            </div>
+
+            <form ng-show="edit">
+                <br />
+                <h4 class="text-info">Please edit below</h4>
+                <div class="editArea form-group">
+                    <span class="glyphicon glyphicon-picture"></span>
+                    <textarea ng-model="content1" class="form-control noBorder" rows="9" placeholder="write content here"></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 text-align-left">
+                        <button type="submit" class="btn submitBtn">Update</button>
+                    </div>
+                    <div class="col-xs-6 text-align-right">
+                        <button ng-click="notShowEdit()" type="button" class="btn cancelBtn">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="row primaryContent">
+        <div class="col-xs-12 noPadding">
+            <h3>Comments</h3>
+            <form>
+                <div class="form-group">
+                    <textarea class="form-control" rows="4" placeholder="leave a comment"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn submitBtn" value="Comment">
+                </div>
+            </form>
+
+            <div class="commentDiv">
+                <span class="text-info">Jason</span>&nbsp;&nbsp;<span>posted at 14:03, Mar 3'16</span>&nbsp;&nbsp;<span class="reply">reply</span>
+                <br/>
+                <span>Jason's comment here</span>
+            </div>
+
+
+            <div class="replyDiv">
+                <div class="replyDiv1">
+                    <span class="glyphicon glyphicon-triangle-top"></span>
+                </div>
+                <div class="replyDiv2">
+                    <span class="text-info">Peter</span>:&nbsp;&nbsp;<span>Peter's reply</span>&nbsp;&nbsp;<span class="reply">reply</span><br/>
+                    <span class="text-info">Jason</span>&nbsp;@&nbsp;<span class="text-info">Peter</span>:&nbsp;&nbsp;<span>Jason's reply</span>&nbsp;&nbsp;<span class="reply">reply</span><br/>
+                </div>
+            </div>
+
+            <div class="commentDiv">
+                <span class="text-info">David</span>&nbsp;&nbsp;<span>posted at 10:03, Mar 2'16</span>&nbsp;&nbsp;<span class="reply">reply</span>
+                <br/>
+                <span class="comment">David's comment here</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

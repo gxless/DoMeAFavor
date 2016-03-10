@@ -1,0 +1,212 @@
+/*-----------------body----------------------*/
+body {
+    background-color: #efefef;
+}
+
+/*-----------------nav bar----------------------*/
+nav {
+    z-index: 999;
+    overflow: hidden;
+}
+.navbar {
+    background-color: #c03939;
+    border-radius: 0;
+    border-style: none;
+    margin: 0;
+}
+.navbar li a, .navbar-brand {
+    color: #ffffff !important;
+}
+.navbar li:hover {
+    display: block;
+    background-color: #a73939;
+}
+
+/*-----------------content ----------------------*/
+.contentWrapper {
+    margin-bottom: 30px;
+}
+.primaryContent {
+    margin-top: 30px;
+    background-color: white;
+    padding: 20px 35px 25px;
+}
+/*-----------------friend ----------------------*/
+.friendPhotoWrapper {
+    margin: 20px;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+.friendPhoto {
+    width: 100%;
+    height: auto;
+}
+/*-----------------profile ----------------------*/
+.profilePhotoWrapper {
+    text-align: center;
+}
+#profilePhoto {
+    width: 150px;
+    height: 185px;
+}
+.profilePhotoBtn {
+    border-style: none;
+    background-color: white;
+}
+/*-----------------favor ----------------------*/
+.plusIcon {
+    font-size: 12px;
+}
+.horizontalLine {
+    border-top: 2px dashed #efefef;
+    margin-top: 20px;
+}
+.noPadding {
+    padding: 0;
+}
+.newPostTitle {
+    margin-top: 15px;
+    margin-bottom: 22px;
+}
+
+.deleteText:hover {
+    text-decoration: underline;
+}
+.cancelBtn {
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 1px solid #c03939;
+    border-radius: 2px;
+    color: #c03939;
+    background-color: white;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.cancelBtn:focus {
+    color: #c03939;
+    outline: none;
+}
+.cancelBtn:hover, .cancelBtn:active {
+    color: white;
+    background-color: #c03939;
+}
+
+/*-----------------login/register ----------------------*/
+.editArea {
+    border: 1px solid #c2c2c2;
+    border-radius: 2px;
+}
+.noBorder {
+    border: none;
+}
+.glyphicon-picture {
+    font-size: 30px;
+    margin-left: 10px;
+}
+/*-----------------login/register ----------------------*/
+input.form-control, textarea.form-control {
+    border-radius: 2px;
+}
+/*-----------------community favor----------------------*/
+.joinRequest {
+    margin-top: 20px;
+}
+.commentDiv {
+    margin-top: 25px;
+}
+
+.replyDiv1 {
+    color: #efefef;
+    font-size: 20px;
+    padding-left: 20px;
+    margin-bottom: -12px;
+}
+.replyDiv2 {
+    background-color: #efefef;
+    padding: 10px 0 10px 20px;
+}
+.reply {
+    color: #2b6589;
+}
+.reply:hover {
+    text-decoration: underline;
+}
+
+.acceptBtn {
+    color: #499149;
+}
+.rejectBtn {
+    color: #c04a47;
+}
+.acceptBtn, .rejectBtn {
+    border: none;
+    background-color: white;
+}
+.acceptBtn:focus, .rejectBtn:focus {
+    outline: none;
+}
+.acceptBtn:hover {
+    color: #3c783c;
+}
+.rejectBtn:hover {
+    color: #963232;
+}
+
+/*-----------------community ----------------------*/
+.submitBtn {
+    border-radius: 2px;
+    padding-left: 25px;
+    padding-right: 25px;
+    color: white;
+    background-color: #c03939;
+}
+.submitBtn:hover {
+    color: white;
+    background-color: #a73939;
+}
+.submitBtn:focus {
+    color: white;
+    outline: none;
+}
+
+.tagBtn {
+    padding: 3px 12px;
+    border: 1px solid #c03939;
+    border-radius: 0;
+    color: #c03939;
+    background-color: white;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.tagBtn:focus {
+    color: #c03939;
+    outline: none;
+}
+.tagBtn:hover, .tagBtn:active {
+    color: white;
+    background-color: #c03939;
+}
+
+.clickedBtn {
+    color: white;
+    background-color: #c03939;
+}
+.clickedBtn:focus {
+    color:white;
+}
+
+/*-----------------text align ----------------------*/
+.text-align-left {
+    text-align: left;
+}
+.text-align-right {
+    text-align: right;
+}
+.text-grey {
+    color: #777777;
+}
+.text-normal {
+    color: black;
+}
+
+

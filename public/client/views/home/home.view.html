@@ -1,0 +1,82 @@
+<div class="container contentWrapper">
+
+    <div class="row primaryContent">
+
+        <div class="col-xs-12 noPadding">
+            <h3>Add a New Favor? &nbsp;
+                <button ng-click="showNewPost()" class="btn tagBtn">
+                    <span class="glyphicon glyphicon-plus plusIcon"></span> Favor
+                </button>
+            </h3>
+
+        </div>
+
+        <div ng-show="newPost" class="col-xs-12 noPadding horizontalLine">
+            <br/>
+            <form>
+                <div class="row form-group">
+                    <div class="col-sm-5">
+                        <input ng-model="title" type="text" class="form-control" placeholder="Title">
+                    </div>
+                </div>
+                <div class="editArea form-group">
+                    <span class="glyphicon glyphicon-picture"></span>
+                    <textarea class="form-control noBorder" rows="7" placeholder="write content here"></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 text-align-left">
+                        <button type="submit" class="btn submitBtn">Add</button>
+                    </div>
+                    <div class="col-xs-6 text-align-right">
+                        <button ng-click="notShowNewPost()" type="button" class="btn cancelBtn">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="row primaryContent">
+        <div class="col-xs-12 noPadding">
+            <h3>My Favor 1 &nbsp;
+                <a href="#/favor" class="btn tagBtn"></span> More</a>
+            </h3>
+            <p><span class="text-info">Michael</span> posted on Feb 2, 2016</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                printer took a galley of type and scrambled it to make a type specimen
+                book...
+            </p>
+        </div>
+    </div>
+
+    <div class="row primaryContent">
+        <div class="col-xs-12 noPadding">
+            <h3>My Favor 2 &nbsp;
+                <a href="#/favor" class="btn tagBtn"></span> More</a>
+            </h3>
+            <p><span class="text-info">Edward</span> posted on Feb 2, 2016</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                printer took a galley of type and scrambled it to make a type specimen book...
+            </p>
+        </div>
+    </div>
+
+    <div class="row primaryContent">
+        <div class="col-xs-12 noPadding">
+            <h3>My Favor 3 &nbsp;
+                <a href="#/favor" class="btn tagBtn"></span> More</a>
+            </h3>
+            <p><span class="text-info">Mia</span> posted on Feb 2, 2016</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                printer took a galley of type and scrambled it to make a type specimen book...
+            </p>
+        </div>
+    </div>
+
+</div>
+
+
