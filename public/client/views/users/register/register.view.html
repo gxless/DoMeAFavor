@@ -1,0 +1,51 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-5 col-sm-offset-4 col-xs-10 col-xs-offset-1">
+            <br />
+            <h2 class="text-center">Join Us</h2>
+            <br />
+            <form name="registrationForm" novalidate>
+
+                <div class="form-group has-feedback">
+                    <input ng-model="user.username" ng-blur="!usernameInitOnBlur && blurUsername(user.username)"
+                           ng-change="usernameInitOnBlur && checkUsername(user.username)" type="text"
+                           class="form-control" id="loginUsername" name="username" placeholder="Username" required>
+                    <span ng-class="{'glyphicon-ok':usernameOk, 'glyphicon-warning-sign':usernameWarning}"
+                          class="glyphicon form-control-feedback"></span>
+                    <span class="errorMessage">{{usernameMessage}}</span>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <input ng-model="user.password" ng-blur="!passwordInitOnBlur && blurPassword(user.password)"
+                           ng-change="passwordInitOnBlur && checkPassword(user.password)" type="password"
+                           class="form-control" placeholder="Password" required>
+                    <span ng-class="{'glyphicon-ok':passwordOk, 'glyphicon-warning-sign':passwordWarning}"
+                          class="glyphicon form-control-feedback"></span>
+                    <span class="errorMessage">{{passwordMessage}}</span>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <input ng-model="passwordV" ng-blur="!passwordVInitOnBlur && blurPasswordV(user.password, passwordV)"
+                           ng-change="passwordVInitOnBlur && checkPasswordV(user.password, passwordV)"
+                           type="password" class="form-control" placeholder="Verify Password" required>
+                    <span ng-class="{'glyphicon-ok':passwordVOk, 'glyphicon-warning-sign':passwordVWarning}"
+                          class="glyphicon form-control-feedback"></span>
+                    <span class="errorMessage">{{passwordVMessage}}</span>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <input ng-model="user.email" ng-blur="!emailInitOnBlur && blurEmail(user.email)"
+                           ng-change="emailInitOnBlur && checkEmail(user.email)" type="email"
+                           class="form-control" id="loginEmail" placeholder="Email Address" required>
+                    <span ng-class="{'glyphicon-ok':emailOk, 'glyphicon-warning-sign':emailWarning}"
+                          class="glyphicon form-control-feedback"></span>
+                    <span class="errorMessage">{{emailMessage}}</span>
+                </div>
+
+                <div class="form-group">
+                    <input ng-click="register(user.username, user.password, passwordV, user.email)" type="submit" class="form-control btn submitBtn" value="Register">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

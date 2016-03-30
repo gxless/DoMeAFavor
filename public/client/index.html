@@ -7,32 +7,57 @@
     <title>Do Me a Favor</title>
 
     <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="">
+    <!-- Include Bootstrap Datepicker -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
 
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <!-- AngularJS library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular.js"></script>
     <!-- AngularJS Routing library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular-route.js"></script>
+
     <!-- Custom AngularJS Scripts -->
+    <script src="directives/datePicker.js"></script>
     <script src="app.js"></script>
     <script src="config.js"></script>
+    <script src="services/user.service.js"></script>
+    <script src="services/favor.service.js"></script>
+    <script src="services/report.service.js"></script>
+    <script src="services/comment.service.js"></script>
+    <script src="services/map.service.js"></script>
+    <script src="views/main/main.controller.js"></script>
+    <script src="views/header/header.controller.js"></script>
     <script src="views/home/home.controller.js"></script>
     <script src="views/home/favor.controller.js"></script>
+    <script src="views/users/profile/profile.controller.js"></script>
+    <script src="views/users/friend/friend.controller.js"></script>
+    <script src="views/users/register/register.controller.js"></script>
+    <script src="views/users/login/login.controller.js"></script>
+    <script src="views/community/community.controller.js"></script>
+    <script src="views/map/map.controller.js"></script>
 
 
 </head>
-<body>
+<body ng-controller="MainController">
 
     <div ng-include="'views/header/header.view.html'"></div>
 
     <div ng-view></div>
 
 
-    <!-- jQuery Core javascript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <!-- Bootstrap javascript -->
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiNagg6qKV8uOfPlIRRJ4RUhjeGx2S-WU" async defer>
+    </script>
+    <!-- BootStrap JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- Bootstrap DatePicker -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+
 </body>
 </html>

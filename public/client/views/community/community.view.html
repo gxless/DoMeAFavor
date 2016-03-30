@@ -1,0 +1,57 @@
+<div class="container contentWrapper">
+
+    <div class="row primaryContent">
+        <div class="col-xs-12 noPadding">
+            <div class="alert alert-info">
+                <h4>For Testing This Website</h4>
+                <p>Please either register or use registered user <b>{username: aliceC, password: alice}</b>
+                    or <b>{username: bobV, password: bob}</b> to log in.
+                </p>
+                <p>This platform is used to connect nonprofit organizations to volunteers. It has two kinds of users.
+                    User "aliceC" is the coordinator user whose name is alice, user "bobV" is the volunteer user whose
+                    name is bob. Coordinator users are able to create favors and edit favor requests from volunteers, and
+                    volunteer users could join favors and post the related reports during the time they are doing their
+                    volunteer work.</p>
+                <p>During your login time, please <b>DO NOT</b> refresh the page. I will implement Passport.js later to keep
+                the user login after refreshing.</p>
+
+                <br/>
+            </div>
+            <div class="alert alert-info">
+                <p class=""><strong>More Info:</strong><br />
+                    Personal Blog: <a href="http://blog-gxless.rhcloud.com">http://blog-gxless.rhcloud.com</a><br />
+                    DoMeAFavor Website: <a href="http://domeafavor-gxless.rhcloud.com/">http://domeafavor-gxless.rhcloud.com/</a><br />
+                    FormBuilder Website: <a href="http://formbuilder-gxless.rhcloud.com/">http://formbuilder-gxless.rhcloud.com/</a><br />
+                    Github: <a href="https://github.com/gxless/DoMeAFavor">https://github.com/gxless/DoMeAFavor</a>
+                </div>
+        </div>
+    </div>
+
+    <div class="row primaryContent">
+        <div class="col-xs-12 noPadding">
+            <h3>Category</h3>
+            <button ng-click="showFavors(0)" ng-class="{clickedBtn:categoryChosen==0}" class="btn tagBtn">All</button>
+            <button ng-click="showFavors(1)" ng-class="{clickedBtn:categoryChosen==1}" class="btn tagBtn">Friendly Visiting</button>
+            <button ng-click="showFavors(2)" ng-class="{clickedBtn:categoryChosen==2}" class="btn tagBtn">Friendly Helper</button>
+            <button ng-click="showFavors(3)" ng-class="{clickedBtn:categoryChosen==3}" class="btn tagBtn">Medical Escort</button>
+            <button ng-click="showFavors(4)" ng-class="{clickedBtn:categoryChosen==4}" class="btn tagBtn">PetPals</button>
+            <button ng-click="showFavors(5)" ng-class="{clickedBtn:categoryChosen==5}" class="btn tagBtn">Music Works</button>
+        </div>
+    </div>
+
+    <div ng-repeat="favor in favors | orderBy:'favor.date':true" class="row primaryContent">
+        <div class="col-xs-12 noPadding">
+            <h3>{{favor.title}} &nbsp;
+                <a href="#/{{favor.coordinatorId}}/favors/{{favor._id}}" class="btn tagBtn"></span> View</a>
+            </h3>
+            <p>
+                <a href="#/{{favor.coordinatorId}}/favors">
+                    <span class="text-info">{{favor.coordinator}}</span></a>
+                posted on {{getLiteralDate(favor.date)}}
+            </p>
+            <p>{{favor.content}}</p>
+        </div>
+    </div>
+
+</div>
+

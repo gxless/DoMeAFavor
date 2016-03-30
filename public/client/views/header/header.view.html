@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" ng-controller="HeaderController">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -6,19 +6,43 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#myPage">DoMeAFav</a>
+            <a class="navbar-brand" href="#/">DoMeAFav</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#/">HOME</a></li>
-                <li><a href="#/profile">PROFILE</a></li>
-                <li><a href="#/friend">FRIENDS</a></li>
-                <li><a href="#community/favors">COMMUNITY</a></li>
-                <li><a href="#/">username</a></li>
-                <li><a href="#/mail"><span class="glyphicon glyphicon-envelope"></span></a></li>
-                <li><a href="#/register">Register</a></li>
-                <li><a href="#/login">Login</a></li>
-                <li><a href="#/">Logout</a></li>
+                <li ng-show="currentUser">
+                    <a ng-class="{'active':homeActive($location.url())}"
+                       ng-click="collapseNav()" href="#/{{currentUser._id}}/favors">HOME</a>
+                </li>
+                <li ng-show="currentUser">
+                    <a ng-class="{'active':profileActive($location.url())}"
+                       ng-click="collapseNav()" href="#/{{currentUser._id}}/profile">PROFILE</a>
+                </li>
+                <li ng-show="currentUser">
+                    <a ng-class="{'active':friendsActive($location.url())}"
+                       ng-click="collapseNav()" href="#/{{currentUser._id}}/friends">FRIENDS</a>
+                </li>
+                <li>
+                    <a ng-class="{'active':$location.url()=='/'}"
+                       ng-click="collapseNav()" href="#/">COMMUNITY</a>
+                </li>
+                <li>
+                    <a ng-class="{'active':$location.url()=='/map'}"
+                       ng-click="collapseNav()" href="#/map">
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                    </a>
+                </li>
+                <li ng-show="!currentUser">
+                    <a ng-class="{'active': $location.url()=='/register'}"
+                       ng-click="collapseNav()" href="#/register">REGISTER</a>
+                </li>
+                <li ng-show="!currentUser">
+                    <a ng-class="{'active': $location.url()=='/login'}"
+                       ng-click="collapseNav()" href="#/login">LOGIN</a>
+                </li>
+                <li ng-show="currentUser" ng-click="logout()">
+                    <a href="#/">LOGOUT</a>
+                </li>
             </ul>
         </div>
     </div>

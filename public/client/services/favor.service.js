@@ -2,101 +2,60 @@
     "use strict";
     angular
         .module("DoMeAFavorApp")
-        .factory("UserService", UserService);
+        .factory("FavorService", FavorService);
 
 
-    function UserService($rootScope, $q, $http) {
+    function FavorService($q, $http) {
+
         var api = {
-            updateUserById: updateUserById,
-            createUser: createUser,
+            getFavorsByUserId: getFavorsByUserId,
+            getFavorsByTagId: getFavorsByTagId,
+            createFavor: createFavor,
+            getFavorById: getFavorById,
+            getJoinedUsersById: getJoinedUsersById,
 
-            login: login,
-            getUserById: getUserById,
-            getIdByUsername: getIdByUsername,
-            hasEmail: hasEmail,
+            joinFavor: joinFavor,
+            hasJoined: hasJoined,
+            hasRequest: hasRequest,
+            agreeJoin: agreeJoin,
+            rejectJoin: rejectJoin,
 
-            getFriendsById: getFriendsById,
-            addFriend: addFriend,
-            isFriend: isFriend,
-            unFriend: unFriend,
-
-            setCurrentUser: setCurrentUser,
-            getCurrentUser: getCurrentUser
+            deleteFavorById: deleteFavor
 
         };
 
         return api;
 
-        function hasEmail(email) {
+        function getFavorsByUserId(userId) {
             var deferred = $q.defer();
-            $http.get("/api/userService/user/email/" + email)
+            $http.get("/api/favorService/user/" + userId + "/favor")
                 .success(function (response) {
                     deferred.resolve(response);
                 });
             return deferred.promise;
         }
 
-        function getIdByUsername(username) {
+        function getFavorsByTagId(tagId) {
             var deferred = $q.defer();
-            $http.get("/api/userService/user/id/" + username)
+            $http.get("/api/favorService/tag/" + tagId + "/favor")
                 .success(function (response) {
                     deferred.resolve(response);
                 });
             return deferred.promise;
         }
 
-
-        function getUserById(userId) {
+        function getFavorById(favorId) {
             var deferred = $q.defer();
-            $http.get("/api/userService/user/" + userId)
+            $http.get("/api/favorService/favor/" + favorId)
                 .success(function (response) {
                     deferred.resolve(response);
                 });
             return deferred.promise;
         }
 
-        function updateUserById(userId, user) {
+        function createFavor(favor) {
             var deferred = $q.defer();
-            $http.put("/api/userService/user/" + userId, user)
-                .success(function (response) {
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
-        function login(username, password) {
-            var deferred = $q.defer();
-            var credentials = {"username": username, "password":password};
-            $http.post("/api/userService/login", credentials)
-                .success(function (response) {
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
-        function createUser(user) {
-            var deferred = $q.defer();
-            $http.post("/api/userService/user", user)
-                .success(function (response) {
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
-        function setCurrentUser(user) {
-            $rootScope.currentUser = user;
-        }
-
-        function getCurrentUser() {
-            return $rootScope.currentUser;
-        }
-
-
-
-        //friends functions
-        function getFriendsById(userId) {
-            var deferred = $q.defer();
-            $http.get("/api/userService/user/" + userId + "/friend")
+            $http.post("/api/favorService/favor", favor)
                 .success(function (response) {
                     deferred.resolve(response);
                 });
@@ -104,31 +63,71 @@
         }
 
 
-        function addFriend(userId, friendId) {
+        function joinFavor(favorId, userId) {
             var deferred = $q.defer();
-            $http.post("/api/userService/user/" + userId + "/friend/" + friendId)
+            $http.post("/api/favorService/favor/" + favorId + "/user/" + userId)
                 .success(function (response) {
                     deferred.resolve(response);
                 });
             return deferred.promise;
         }
 
-        function unFriend(userId, friendId) {
+
+        function agreeJoin(favorId, userId) {
             var deferred = $q.defer();
-            $http.delete("/api/userService/user/" + userId + "/friend/" + friendId)
+            $http.put("/api/favorService/favor/" + favorId + "/user/" + userId)
                 .success(function (response) {
                     deferred.resolve(response);
                 });
             return deferred.promise;
         }
 
-        function isFriend(userId, friendId) {
+        function rejectJoin(favorId, userId) {
             var deferred = $q.defer();
-            $http.get("/api/userService/user/" + userId + "/friendId/" + friendId)
+            $http.delete("/api/favorService/favor/" + favorId + "/user/" + userId)
                 .success(function (response) {
                     deferred.resolve(response);
                 });
             return deferred.promise;
+        }
+
+
+        function getJoinedUsersById(favorId) {
+            var deferred = $q.defer();
+            $http.get("/api/favorService/favor/" + favorId + "/volunteer")
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
+        function hasJoined(userId, favorId) {
+            var deferred = $q.defer();
+            $http.get("/api/favorService/favor/" + favorId + "/volunteer/" + userId + "/joined")
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
+        function hasRequest(userId, favorId) {
+            var deferred = $q.defer();
+            $http.get("/api/favorService/favor/" + favorId + "/volunteer/" + userId + "/requested")
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+            return deferred.promise;
+        }
+
+
+        //old
+        function deleteFavor(favorId) {
+            for(var i in favors) {
+                if(favors[i]._id == favorId) {
+                    favors.splice(i, 1);
+                    break;
+                }
+            }
         }
 
 

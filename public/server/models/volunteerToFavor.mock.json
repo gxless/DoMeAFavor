@@ -1,0 +1,20 @@
+[
+  {"favorId":1111, "userId":111, "joined":true},
+  {"favorId":1111, "userId":222, "joined":true},
+  {"favorId":1111, "userId":333, "joined":false},
+  {"favorId":1111, "userId":444, "joined":false},
+  {"favorId":1111, "userId":555, "joined":true},
+
+  {"favorId":2222, "userId":111, "joined":true},
+  {"favorId":2222, "userId":333, "joined":true},
+  {"favorId":2222, "userId":444, "joined":true},
+
+  {"favorId":3333, "userId":111, "joined":true},
+  {"favorId":3333, "userId":222, "joined":false},
+  {"favorId":3333, "userId":555, "joined":true},
+
+
+  {"favorId":4444, "userId":222, "joined":true},
+  {"favorId":4444, "userId":555, "joined":true}
+
+]

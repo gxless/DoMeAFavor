@@ -1,0 +1,16 @@
+[
+  {"userId": 111, "friendId": 222, "isFriend": true},
+  {"userId": 222, "friendId": 111, "isFriend": true},
+  {"userId": 111, "friendId": 333, "isFriend": true},
+  {"userId": 333, "friendId": 111, "isFriend": true},
+  {"userId": 111, "friendId": 444, "isFriend": true},
+  {"userId": 444, "friendId": 111, "isFriend": true},
+  {"userId": 222, "friendId": 444, "isFriend": true},
+  {"userId": 444, "friendId": 222, "isFriend": true},
+  {"userId": 222, "friendId": 555, "isFriend": true},
+  {"userId": 555, "friendId": 222, "isFriend": true},
+  {"userId": 333, "friendId": 444, "isFriend": true},
+  {"userId": 444, "friendId": 333, "isFriend": true},
+  {"userId": 333, "friendId": 555, "isFriend": true},
+  {"userId": 555, "friendId": 333, "isFriend": true}
+]

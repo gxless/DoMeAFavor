@@ -1,77 +1,108 @@
 <div class="container contentWrapper">
 
+    <!-- selected favor section -->
     <div class="row primaryContent">
         <div class="col-xs-12 noPadding">
-            <h3>My Favor 1 &nbsp;
-                <button ng-click="showNewPost()" class="btn tagBtn">
-                    <span class="glyphicon glyphicon-plus plusIcon"></span> Post
-                </button>
-                <button ng-click="disjoin()" class="btn tagBtn">
+            <h3>{{favor.title}} &nbsp;
+                <button ng-show="hasAccess && !adminFavor" ng-click="showDisjoin()" class="btn tagBtn disjoinBtn">
                     <span class="glyphicon glyphicon-remove plusIcon"></span> Disjoin
                 </button>
+                <button ng-hide="hasJoined" ng-click="joinFavor()" class="btn tagBtn">
+                    <span class="glyphicon glyphicon-plus plusIcon"></span> Join
+                </button>
+
+                <button ng-show="hasAccess" ng-click="showNewPost()" ng-show="!newPost" class="btn tagBtn">
+                    <span class="glyphicon glyphicon-plus plusIcon"></span> Report
+                </button>
             </h3>
-            <p ng-show="!join" class="alert alert-danger">
-                <span>Are you Sure?</span><br/>
-                <span class="text-primary deleteText">disjoin</span> or
-                <span class="text-primary deleteText">cancel</span>
-            </p>
-            <p><span class="text-info">Michael</span> posted on Feb 2, 2016</p>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                has been the industry's standard dummy text ever since the 1500s, when an unknown
-                printer took a galley of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release
-                of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </p>
+
+            <div>
+                <p ng-show="!join" class="alert alert-danger">
+                    <span>Are you Sure?</span><br/>
+                    <button ng-click="disjoin()" class="text-primary deleteText">disjoin</button> or
+                    <button ng-click="cancelDisjoin()" class="text-primary deleteText">cancel</button>
+                </p>
+                <p><a href="#/{{favor.coordinatorId}}/favors"><span class="text-info">{{favor.coordinator}}</span></a> posted on {{getLiteralDate(favor.date)}}</p>
+                <p>{{favor.content}}</p>
+
+                
+                <!-- coordinator edit joins section -->
+                <div ng-show="adminFavor">
+                    <div>
+                        <br />
+                        <h4>Joined Members</h4>
+                        <p>
+                            <span ng-repeat="user in joinedUsers | filter:{joined:true}">
+                                <a href="#/{{user.userId}}/favors"><span class="text-info">{{(user.username)}}</span></a>&nbsp;&nbsp;
+                            </span>
+                        </p>
+                    </div>
+
+                    <h4 class="joinRequest">Join Requests</h4>
+
+                    <div ng-repeat="user in joinedUsers | filter:{joined:false}" class="row">
+                        <div class="col-xs-7">
+                            <a href="#/{{user.userId}}/favors">
+                                <span class="text-info">{{(user.username)}}</span>
+                            </a>
+                            <span>requested to join this favor</span>
+                        </div>
+                        <div class="col-xs-5">
+                            <button ng-click="agreeJoin(user.userId)" class="acceptBtn">Accept</button>&nbsp;
+                            <button ng-click="rejectJoin(user.userId)" class="rejectBtn">Reject</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
+        <!-- add new report section -->
         <div ng-show="newPost" class="col-xs-12 noPadding horizontalLine">
-            <h4 class="newPostTitle">{{newPostDate}} <span class="text-grey">(New Post)</span>
-            </h4>
+            <h4 class="newPostTitle">{{newPostDate}} <span class="text-grey">New Report</span></h4>
 
-            <form>
-
+            <form novalidate>
                 <div class="editArea form-group">
                     <span class="glyphicon glyphicon-picture"></span>
-                    <textarea class="form-control noBorder" rows="9" placeholder="write content here"></textarea>
+                    <textarea ng-model="content" class="form-control noBorder" rows="9" placeholder="write content here" required></textarea>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-6 text-align-left">
-                        <button type="submit" class="btn submitBtn">Post</button>
+                        <button ng-click="createReport(content)" type="submit" class="btn submitBtn">Post</button>
                     </div>
                     <div class="col-xs-6 text-align-right">
-                        <button ng-click="notShowNewPost()" type="button" class="btn cancelBtn">Cancel</button>
+                        <button ng-click="showNewPost()" type="button" class="btn cancelBtn">Cancel</button>
                     </div>
                 </div>
             </form>
         </div>
 
-        <div class="col-xs-12 noPadding horizontalLine">
+        <!-- reports section -->
+        <div ng-repeat="report in reports" class="col-xs-12 noPadding horizontalLine">
             <div>
-                <h4>{{title1}} &nbsp;
-                    <button ng-click="showEdit()" class="btn tagBtn">
+                <h4>{{getLiteralDate(report.date)}} &nbsp;
+                    <button ng-show="hasAccess" ng-click="showEdit($index)" ng-show="selectedEdit != $index" class="btn tagBtn">
                         <span class="glyphicon glyphicon-pencil plusIcon"></span> Edit
                     </button>
-                    <button ng-show="edit" class="btn tagBtn">
+                    <button ng-show="hasAccess" ng-click="deleteReport($index, report._id)" ng-show="selectedEdit == $index" class="btn tagBtn">
                         <span class="glyphicon glyphicon-remove plusIcon"></span> Delete
                     </button>
                 </h4>
-                <p>{{content1}}</p>
+                <p>{{report.content}}</p>
             </div>
 
-            <form ng-show="edit">
+            <form ng-show="selectedEdit == $index">
                 <br />
                 <h4 class="text-info">Please edit below</h4>
                 <div class="editArea form-group">
                     <span class="glyphicon glyphicon-picture"></span>
-                    <textarea ng-model="content1" class="form-control noBorder" rows="9" placeholder="write content here"></textarea>
+                    <textarea ng-model="editContent.content" class="form-control noBorder" rows="7" placeholder="write content here"></textarea>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-6 text-align-left">
-                        <button type="submit" class="btn submitBtn">Update</button>
+                        <button ng-click="updateReport($index, editContent)" type="submit" class="btn submitBtn">Update</button>
                     </div>
                     <div class="col-xs-6 text-align-right">
                         <button ng-click="notShowEdit()" type="button" class="btn cancelBtn">Cancel</button>
@@ -80,45 +111,55 @@
             </form>
         </div>
 
-
     </div>
 
 
-
+    <!-- comment section -->
     <div class="row primaryContent">
         <div class="col-xs-12 noPadding">
             <h3>Comments</h3>
-            <form>
+            <form id="anchor">
                 <div class="form-group">
-                    <textarea class="form-control" rows="4" placeholder="leave a comment"></textarea>
+                    <textarea ng-model="comment" class="form-control" rows="4" placeholder="{{commentPlaceholder}}"></textarea>
                 </div>
-                <div class="form-group">
-                    <input type="submit" class="btn submitBtn" value="Comment">
+                <div class="form-group row">
+                    <div class="col-xs-6 text-align-left">
+                        <button ng-click="makeComment(comment)" type="submit" class="btn submitBtn">{{commentBtnText}}</button>
+                    </div>
+                    <div ng-show="isReply" class="col-xs-6 text-align-right">
+                        <button ng-click="cancelReply()" type="button" class="btn cancelBtn">Cancel</button>
+                    </div>
                 </div>
+
             </form>
 
-            <div class="commentDiv">
-                <span class="text-info">Jason</span>&nbsp;&nbsp;<span>posted at 14:03, Mar 3'16</span>&nbsp;&nbsp;<span class="reply">reply</span>
-                <br/>
-                <span>Jason's comment here</span>
-            </div>
-
-
-            <div class="replyDiv">
-                <div class="replyDiv1">
-                    <span class="glyphicon glyphicon-triangle-top"></span>
+            <!--iterate comments-->
+            <div ng-repeat="comment in comments">
+                <div class="commentDiv">
+                    <a href="#/{{comment.commenterId}}/favors"><span class="text-info">{{comment.commenter}}</span></a>&nbsp;
+                    <span>posted at {{getLiteralTime(comment.date)}}</span>&nbsp;
+                    <button ng-click="requestReply(comment._id, comment.commenterId, comment.commenter, $index)" class="replyBtn">reply</button>
+                    <br/>
+                    <span>{{comment.content}}</span>
                 </div>
-                <div class="replyDiv2">
-                    <span class="text-info">Peter</span>:&nbsp;&nbsp;<span>Peter's reply</span>&nbsp;&nbsp;<span class="reply">reply</span><br/>
-                    <span class="text-info">Jason</span>&nbsp;@&nbsp;<span class="text-info">Peter</span>:&nbsp;&nbsp;<span>Jason's reply</span>&nbsp;&nbsp;<span class="reply">reply</span><br/>
+
+                <!--iterate replies in each comment-->
+                <div ng-show="comment.replies.length > 0" class="replyDiv">
+                    <div class="replyDiv1">
+                        <span class="glyphicon glyphicon-triangle-top"></span>
+                    </div>
+                    <div class="replyDiv2">
+                        <div ng-repeat="reply in comment.replies">
+                            <a href="#/{{reply.replierId}}/favors"><span class="text-info">{{(reply.replier)}}</span></a>&nbsp;@
+                            <a href="#/{{reply.hostId}}/favors"><span class="text-info">{{(reply.host)}}</span></a>
+                            <span>at {{getLiteralTime(reply.date)}}:</span>&nbsp;
+                            <span>{{reply.content}}</span>&nbsp;
+                            <button ng-click="requestReply(comment._id, reply.replierId, reply.replier, $parent.$index)" class="replyBtn">reply</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="commentDiv">
-                <span class="text-info">David</span>&nbsp;&nbsp;<span>posted at 10:03, Mar 2'16</span>&nbsp;&nbsp;<span class="reply">reply</span>
-                <br/>
-                <span class="comment">David's comment here</span>
-            </div>
         </div>
     </div>
 
