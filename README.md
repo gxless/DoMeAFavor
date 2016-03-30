@@ -14,11 +14,11 @@ So I am thinking to build a platform to help the volunteer organization post the
 
 
 ### Current Progress
-This website is not finished yet! I have done the User Interface Design and have simulated most of the operations that would be used in this project. Below is what will be implemented in the following weeks:
-* Finish client side development
-* Build server side with Node.js
+This website is not finished yet! I have done the User Interface Design and most of the client and server side programming. Below are what I will implement in the following weeks:
 * Connect to MongoDB
+* Using Passport.js
 * Bug fixes
+* Add new features
 
 
 ### More Info
