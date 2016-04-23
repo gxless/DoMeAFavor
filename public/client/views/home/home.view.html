@@ -5,7 +5,7 @@
         <div class="col-sm-12 noPadding">
             <img src="./images/profilePhoto.png" id="homePhoto" alt="home photo">
             <span id="homeHolder"><b>{{(viewedUser.username)}}</b></span>&nbsp;&nbsp;&nbsp;
-            <button ng-hide="isFriend" ng-click="addFriend(viewedUser._id)" class="btn tagBtn"></span>Add Friend</button>
+            <button ng-hide="isFriend" ng-click="addFriend(viewedUser._id, viewedUser.username)" class="btn tagBtn"></span>Add Friend</button>
             <br />
             <p><b>Description</b>: {{viewedUser.description}}&nbsp;&nbsp;
                 <br/><a href="#/{{viewedUser._id}}/profile"><span class="text-info">More Info</span></a>
@@ -14,7 +14,7 @@
     </div>
 
     <!-- only show for coordinators -->
-    <div ng-show="isCoordinator" class="row primaryContent">
+    <div ng-if="isCoordinator" class="row primaryContent">
 
         <div class="col-xs-12 noPadding">
             <h3>Add a New Favor? &nbsp;
@@ -24,7 +24,7 @@
             </h3>
         </div>
 
-        <div ng-show="newPost" class="col-xs-12 noPadding horizontalLine">
+        <div ng-if="newPost" class="col-xs-12 noPadding horizontalLine">
             <br/>
             <form novalidate>
                 <div class="row">
@@ -43,11 +43,10 @@
                         <i class="fa fa-sort addon"></i>
                     </div>
                     <div class="col-sm-4 form-group">
-                        <input ng-model="newFavor.address" type="text" class="form-control" placeholder="Set Place" required>
+                        <input ng-model="newFavor.address" type="text" class="form-control" placeholder="Set Place(optional)">
                     </div>
                 </div>
                 <div class="editArea form-group">
-                    <span class="glyphicon glyphicon-picture"></span>
                     <textarea ng-model="newFavor.content" class="form-control noBorder" rows="7" placeholder="write content here" required></textarea>
                 </div>
 

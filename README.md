@@ -9,14 +9,11 @@ So I am thinking to build a platform to help the volunteer organization post the
 
 ### Technologies
 * HTML5, CSS3, BootStrap, JavaScript, jQuery, AngularJS
-* Node.js, Express.js, MongoDB, Mongoose
+* Node.js, Express.js, Passport.js, MongoDB, Mongoose
 * Openshift, Git, Sublime Text, WebStorm IDE
 
 
 ### Current Progress
-This website is not finished yet! I have done the User Interface Design and most of the client and server side programming. Below are what I will implement in the following weeks:
-* Connect to MongoDB
-* Using Passport.js
 * Bug fixes
 * Add new features
 
@@ -27,5 +24,3 @@ This website is not finished yet! I have done the User Interface Design and most
 * DoMeAFavor Website: http://domeafavor-gxless.rhcloud.com
 * Github: https://github.com/gxless
 * Email: gao.xian@husky.neu.edu
-
-

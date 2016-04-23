@@ -21,22 +21,21 @@
 
         UserService.getFriendsById($routeParams.userId)
             .then(function (response) {
-                $scope.friends = response;
+                $scope.friends = response.friends;
                 if($scope.friends.length == 0) {
                     $scope.hasFriend = true;
                 }
             });
 
 
-        function unFriend(friend, index) {
-            UserService.unFriend(currentUser._id, friend.friendId)
+        function unFriend(friendId, index) {
+            UserService.unFriend(currentUser._id, friendId)
                 .then(function (response) {
-                    if(response) {
-                        $scope.friends.splice(index, 1);
-                        if($scope.friends.length == 0) {
-                            $scope.hasFriend = true;
-                        }
+                    $scope.friends = response;
+                    if($scope.friends.length == 0) {
+                        $scope.hasFriend = true;
                     }
+
                 });
         }
 

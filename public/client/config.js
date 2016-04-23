@@ -10,19 +10,23 @@
                 })
                 .when("/:userId/favors", {
                     templateUrl: "views/home/home.view.html",
-                    controller: "HomeController"
+                    controller: "HomeController",
+                    resolve: {loggedin: checkCurrentUser}
                 })
                 .when("/:userId/favors/:favorId", {
                     templateUrl: "views/home/favor.view.html",
-                    controller: "FavorController"
+                    controller: "FavorController",
+                    resolve: {loggedin: checkCurrentUser}
                 })
                 .when("/:userId/profile", {
                     templateUrl: "views/users/profile/profile.view.html",
-                    controller: "ProfileController"
+                    controller: "ProfileController",
+                    resolve: {loggedin: checkLoggedin}
                 })
                 .when("/:userId/friends", {
                     templateUrl: "views/users/friend/friend.view.html",
-                    controller: "FriendController"
+                    controller: "FriendController",
+                    resolve: {loggedin: checkCurrentUser}
                 })
                 .when("/:userId/mail", {
                     templateUrl: "views/users/mail/mail.view.html"
@@ -43,4 +47,56 @@
                     redirectTo: "/"
                 });
         });
+
+    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope)
+    {
+        var deferred = $q.defer();
+        $http.get("/api/userService/loggedin").success(function(user)
+        {
+            // User is Authenticated
+            if (user !== '0')
+            {
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            }
+            // User is Not Authenticated
+            else
+            {
+                deferred.reject();
+                $location.url('/login');
+            }
+        });
+        return deferred.promise;
+    };
+
+    var checkCurrentUser = function($q, $timeout, $http, $location, $rootScope)
+    {
+        var deferred = $q.defer();
+        $http.get("/api/userService/loggedin").success(function(user)
+        {
+            // User is Authenticated
+            if (user !== '0')
+            {
+                $rootScope.currentUser = user;
+            }
+            deferred.resolve();
+        });
+        return deferred.promise;
+    };
+
+    var checkCoordinator = function($q, $timeout, $http, $location, $rootScope)
+    {
+        var deferred = $q.defer();
+        $http.get('/api/userService/loggedin').success(function(user)
+        {
+            // User is Authenticated
+            if (user !== '0' && user.volunteer == false)
+            {
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            }
+        });
+
+        return deferred.promise;
+    };
 })();

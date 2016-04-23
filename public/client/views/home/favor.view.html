@@ -27,12 +27,12 @@
 
                 
                 <!-- coordinator edit joins section -->
-                <div ng-show="adminFavor">
+                <div ng-if="adminFavor">
                     <div>
                         <br />
                         <h4>Joined Members</h4>
                         <p>
-                            <span ng-repeat="user in joinedUsers | filter:{joined:true}">
+                            <span ng-repeat="user in favor.joinedUsers | filter:{joined:true}">
                                 <a href="#/{{user.userId}}/favors"><span class="text-info">{{(user.username)}}</span></a>&nbsp;&nbsp;
                             </span>
                         </p>
@@ -40,7 +40,7 @@
 
                     <h4 class="joinRequest">Join Requests</h4>
 
-                    <div ng-repeat="user in joinedUsers | filter:{joined:false}" class="row">
+                    <div ng-repeat="user in favor.joinedUsers | filter:{joined:false}" class="row">
                         <div class="col-xs-7">
                             <a href="#/{{user.userId}}/favors">
                                 <span class="text-info">{{(user.username)}}</span>
@@ -63,7 +63,6 @@
 
             <form novalidate>
                 <div class="editArea form-group">
-                    <span class="glyphicon glyphicon-picture"></span>
                     <textarea ng-model="content" class="form-control noBorder" rows="9" placeholder="write content here" required></textarea>
                 </div>
 
@@ -96,7 +95,6 @@
                 <br />
                 <h4 class="text-info">Please edit below</h4>
                 <div class="editArea form-group">
-                    <span class="glyphicon glyphicon-picture"></span>
                     <textarea ng-model="editContent.content" class="form-control noBorder" rows="7" placeholder="write content here"></textarea>
                 </div>
 

@@ -12,16 +12,14 @@
             getFavorsByTagId: getFavorsByTagId,
             createFavor: createFavor,
             getFavorById: getFavorById,
-            getJoinedUsersById: getJoinedUsersById,
 
             joinFavor: joinFavor,
-            hasJoined: hasJoined,
             hasRequest: hasRequest,
             agreeJoin: agreeJoin,
             rejectJoin: rejectJoin,
+            disJoin: disJoin,
 
             deleteFavorById: deleteFavor
-
         };
 
         return api;
@@ -63,15 +61,18 @@
         }
 
 
-        function joinFavor(favorId, userId) {
+        function joinFavor(favorId, userId, username) {
             var deferred = $q.defer();
-            $http.post("/api/favorService/favor/" + favorId + "/user/" + userId)
+            var newJoin = {
+                "userId": userId,
+                "username": username
+            };
+            $http.post("/api/favorService/favor/" + favorId + "/user/" + userId, newJoin)
                 .success(function (response) {
                     deferred.resolve(response);
                 });
             return deferred.promise;
         }
-
 
         function agreeJoin(favorId, userId) {
             var deferred = $q.defer();
@@ -91,19 +92,9 @@
             return deferred.promise;
         }
 
-
-        function getJoinedUsersById(favorId) {
+        function disJoin(favorId, userId) {
             var deferred = $q.defer();
-            $http.get("/api/favorService/favor/" + favorId + "/volunteer")
-                .success(function (response) {
-                    deferred.resolve(response);
-                });
-            return deferred.promise;
-        }
-
-        function hasJoined(userId, favorId) {
-            var deferred = $q.defer();
-            $http.get("/api/favorService/favor/" + favorId + "/volunteer/" + userId + "/joined")
+            $http.delete("/api/favorService/favor/" + favorId + "/user/" + userId + "/disjoin")
                 .success(function (response) {
                     deferred.resolve(response);
                 });

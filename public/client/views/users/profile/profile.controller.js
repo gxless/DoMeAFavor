@@ -4,9 +4,10 @@
         .module("DoMeAFavorApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController($scope, $routeParams, UserService) {
+    function ProfileController($scope, $routeParams, $http, UserService) {
 
         var currentUser = UserService.getCurrentUser();
+        $scope.userId = currentUser._id;
         $scope.hasAccess = false;
 
         //initialize to display favors based on users' identities
@@ -22,24 +23,12 @@
                 $scope.currentUser = angular.copy(response);
             });
 
-        $scope.passwordWarning = false;
-        $scope.passwordMessage = null;
+
         $scope.emailWarning = false;
         $scope.emailMessage = null;
         $scope.updateMessage = null;
-        $scope.checkPassword = checkPassword;
         $scope.checkEmail = checkEmail;
         $scope.updateProfile = updateProfile;
-
-        function checkPassword(password) {
-            if(password == undefined) {
-                $scope.passwordWarning = true;
-                $scope.passwordMessage = "password cannot be empty";
-            } else {
-                $scope.passwordWarning = false;
-                $scope.passwordMessage = null;
-            }
-        }
 
         function checkEmail(email) {
             if(email == undefined) {
@@ -52,7 +41,11 @@
         }
 
         function updateProfile(user) {
-            if(user.email && user.password) {
+            if(user.email) {
+                if($scope.password) {
+                    user.password = $scope.password;
+                    user.changePass = true;
+                }
                 UserService.updateUserById(user._id, user)
                     .then(function (response) {
                         UserService.setCurrentUser(response);
@@ -63,7 +56,6 @@
                 $scope.updateMessage = null;
             }
         }
-
 
 
     }

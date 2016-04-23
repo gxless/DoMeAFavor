@@ -3,11 +3,22 @@
     <div class="row primaryContent">
         <div class="col-xs-12 noPadding">
             <h3>View All Favors Close to You</h3>
-            <br />
-            <br />
-            <div id="googleMap"></div>
-            <br />
+            <div class="form-group">
+                <div class="col-sm-6 noPadding">
+                    <label class="control-label">Search favors around below place:</label>
+                    <input ng-model="newCenter" class="form-control" type="text" placeholder="set your place">
+                </div>
+                <div class="col-sm-2 col-sm-offset-1 noPadding">
+                    <label class="control-label">&nbsp;</label>
+                    <input ng-click="setPlace(newCenter)" type="button" class="form-control btn submitBtn" placeholder="set your place" value="Search">
+                </div>
+            </div>
         </div>
+
+        <div class="col-xs-12 noPadding" style="margin-top:30px">
+            <div id="googleMap"></div>
+        </div>
+        <br />
     </div>
 
 </div>

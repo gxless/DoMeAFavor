@@ -3,17 +3,22 @@
         .module("DoMeAFavorApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($scope, $rootScope, $location, UserService) {
+    function HeaderController($scope, $rootScope, $location, $http, UserService) {
         $scope.logout = logout;
         $scope.homeActive = homeActive;
         $scope.profileActive = profileActive;
         $scope.friendsActive = friendsActive;
         $scope.collapseNav = collapseNav;
 
+
         function logout() {
-            UserService.setCurrentUser(null);
-            angular.element(".navbar-collapse").collapse("hide");
-            $location.url('/');
+            $http.post("/api/userService/logout")
+                .success(function()
+                {
+                    UserService.setCurrentUser(null);
+                    angular.element(".navbar-collapse").collapse("hide");
+                    $location.url("/");
+                });
         }
 
         function homeActive(currentUrl) {

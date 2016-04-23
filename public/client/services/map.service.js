@@ -8,7 +8,7 @@
     function MapService($q, $http) {
 
         var api = {
-            getPosition: getPosition,
+            getPosition: getPosition
         };
 
         return api;

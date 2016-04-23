@@ -8,17 +8,17 @@
 
         $scope.showFavors = showFavors;
         $scope.getLiteralDate = getLiteralDate;
-
         $scope.categoryChosen = 0;
+
         FavorService.getFavorsByTagId(0)
             .then(function (response) {
-                $scope.favors = response;
+                $scope.favors = response.reverse();
             });
 
         function showFavors(tagId) {
             FavorService.getFavorsByTagId(tagId)
                 .then(function (response) {
-                    $scope.favors = response;
+                    $scope.favors = response.reverse();
                     $scope.categoryChosen = tagId;
 
                 });

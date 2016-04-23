@@ -68,7 +68,7 @@
                 $scope.usernameWarning = true;
                 $scope.usernameMessage = "username cannot be empty";
             } else if($scope.usernameInitOnBlur) {
-                UserService.getIdByUsername(username)
+                UserService.hasUsername(username)
                     .then(function (response) {
                         if(response) {
                             $scope.usernameOk = false;
@@ -99,15 +99,15 @@
             } else if($scope.emailInitOnBlur) {
                 UserService.hasEmail(email)
                     .then(function (response) {
-                    if(response) {
-                        $scope.emailOk = false;
-                        $scope.emailWarning = true;
-                        $scope.emailMessage = "email is taken";
-                    } else {
-                        $scope.emailOk = true;
-                        $scope.emailWarning = false;
-                        $scope.emailMessage = null;
-                    }
+                        if(response) {
+                            $scope.emailOk = false;
+                            $scope.emailWarning = true;
+                            $scope.emailMessage = "email is taken";
+                        } else {
+                            $scope.emailOk = true;
+                            $scope.emailWarning = false;
+                            $scope.emailMessage = null;
+                        }
                 });
 
             }
@@ -164,10 +164,6 @@
             return false;
 
         }
-
-
-
-
 
     }
 

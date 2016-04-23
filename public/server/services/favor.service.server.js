@@ -1,80 +1,99 @@
-module.exports = function (app) {
-    var favorModel = require("./../models/favor.model.js")();
+module.exports = function (app, FavorModel, ReportModel, CommentModel) {
 
-    app.get("/api/favorService/user/:userId/favor", getFavorsByUserId);
+    //favor endpoints
     app.get("/api/favorService/tag/:tagId/favor", getFavorsByTagId);
+    app.get("/api/favorService/user/:userId/favor", getFavorsByUserId);
     app.get("/api/favorService/favor/:favorId", getFavorById);
-    app.get("/api/favorService/favor/:favorId/volunteer", getJoinedUsersById);
-    app.get("/api/favorService/favor/:favorId/volunteer/:userId/joined", hasJoined);
-    app.get("/api/favorService/favor/:favorId/volunteer/:userId/requested", hasRequest);
     app.post("/api/favorService/favor", createFavor);
+
+    //join endpoints
+    app.get("/api/favorService/favor/:favorId/volunteer/:userId/requested", hasRequest);
     app.post("/api/favorService/favor/:favorId/user/:userId", joinFavor);
     app.put("/api/favorService/favor/:favorId/user/:userId", agreeJoin);
     app.delete("/api/favorService/favor/:favorId/user/:userId", rejectJoin);
+    app.delete("/api/favorService/favor/:favorId/user/:userId/disjoin", disJoin);
 
 
-    function getFavorsByUserId(req, res) {
-        var userId = req.params.userId;
-        var favors = favorModel.getFavorsByUserId(userId);
-        res.json(favors);
+    //favor functions
+    function getFavorsByTagId(req, res) {
+        FavorModel.getFavorsByTagId(req.params.tagId)
+            .then(function (response) {
+                res.json(response);
+            });
     }
 
-    function getFavorsByTagId(req, res) {
-        var tagId = req.params.tagId;
-        var favors = favorModel.getFavorsByTagId(tagId);
-        res.json(favors);
+    function getFavorsByUserId(req, res) {
+        FavorModel.getFavorsByUserId(req.params.userId)
+            .then(function (response) {
+                res.json(response);
+            });
     }
 
     function getFavorById(req, res) {
-        var favorId = req.params.favorId;
-        var favor = favorModel.getFavorById(favorId);
-        res.json(favor);
-    }
-
-    function getJoinedUsersById(req, res) {
-        var favorId = req.params.favorId;
-        var volunteers = favorModel.getJoinedUsersById(favorId);
-        res.json(volunteers);
-    }
-
-    function hasJoined(req, res) {
-        var userId = req.params.userId;
-        var favorId = req.params.favorId;
-        var joinStatus = favorModel.hasJoined(userId, favorId);
-        res.json(joinStatus);
-    }
-
-    function hasRequest(req, res) {
-        var userId = req.params.userId;
-        var favorId = req.params.favorId;
-        var requestStatus = favorModel.hasRequest(userId, favorId);
-        res.json(requestStatus);
-    }
-
-    function joinFavor(req, res) {
-        var userId = req.params.userId;
-        var favorId = req.params.favorId;
-        var joinedFavor = favorModel.joinFavor(favorId, userId);
-        res.json(joinedFavor);
-    }
-
-    function agreeJoin(req, res) {
-        var userId = req.params.userId;
-        var favorId = req.params.favorId;
-        var joinedFavor = favorModel.agreeJoin(favorId, userId);
-        res.json(joinedFavor);
-    }
-
-    function rejectJoin(req, res) {
-        var userId = req.params.userId;
-        var favorId = req.params.favorId;
-        var deleted = favorModel.rejectJoin(favorId, userId);
-        res.json(deleted);
+        FavorModel.getFavorById(req.params.favorId)
+            .then(function (response) {
+                res.json(response);
+            });
     }
 
     function createFavor(req, res) {
-        var newFavor = favorModel.createFavor(req.body);
-        res.json(newFavor);
+        FavorModel.createFavor(req.body)
+            .then(function (response) {
+                res.json(response);
+            });
     }
+
+
+    //join functions
+    function hasRequest(req, res) {
+        FavorModel.hasRequest(req.params.favorId, req.params.userId)
+            .then(function (response) {
+                res.json(response);
+            });
+    }
+
+    function joinFavor(req, res) {
+        FavorModel.joinFavor(req.params.favorId, req.body.userId, req.body.username)
+            .then(function (response) {
+                res.json(response);
+            });
+    }
+
+    function agreeJoin(req, res) {
+        FavorModel.agreeJoin(req.params.favorId, req.params.userId)
+            .then(function (response) {
+                res.json(response);
+            });
+    }
+
+    function rejectJoin(req, res) {
+        FavorModel.rejectJoin(req.params.favorId, req.params.userId)
+            .then(function (response) {
+                res.json(response);
+            });
+    }
+
+    function disJoin(req, res) {
+        ReportModel.deleteReportByIds(req.params.favorId, req.params.userId)
+            .then(function (response) {
+                if(response) {
+
+                    CommentModel.deleteCommentByIds(req.params.favorId, req.params.userId)
+                        .then(function (response) {
+                            if(response) {
+
+                                FavorModel.rejectJoin(req.params.favorId, req.params.userId)
+                                    .then(function (response) {
+                                        res.json(response);
+                                    });
+                            }
+                    });
+                }
+            });
+
+
+
+    }
+
 
 };

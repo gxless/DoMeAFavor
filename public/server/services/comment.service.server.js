@@ -1,6 +1,4 @@
-module.exports = function (app) {
-
-    var commentModel = require("./../models/comment.model.js")();
+module.exports = function (app, CommentModel) {
 
     app.get("/api/commentService/favor/:favorId/host/:hostId", getCommentByIds);
     app.post("/api/commentService/comment/:commentId/reply", createReplyById);
@@ -8,21 +6,24 @@ module.exports = function (app) {
 
 
     function getCommentByIds(req, res) {
-        var favorId = req.params.favorId;
-        var hostId = req.params.hostId;
-        var comments = commentModel.getCommentByIds(favorId, hostId);
-        res.json(comments);
+        CommentModel.getCommentByIds(req.params.favorId, req.params.hostId)
+            .then(function (response) {
+               res.json(response);
+            });
     }
 
     function createComment(req, res) {
-        var newComment = commentModel.createComment(req.body);
-        res.json(newComment);
+        CommentModel.createComment(req.body)
+            .then(function (response) {
+                res.json(response);
+            });
     }
 
     function createReplyById(req, res) {
-        var commentId = req.params.commentId;
-        var newReply = commentModel.createReplyById(commentId, req.body);
-        res.json(newReply);
+        CommentModel.createReplyById(req.params.commentId, req.body)
+            .then(function (response) {
+                res.json(response);
+            });
     }
 
 

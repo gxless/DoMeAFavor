@@ -12,7 +12,7 @@
 
             login: login,
             getUserById: getUserById,
-            getIdByUsername: getIdByUsername,
+            hasUsername: hasUsername,
             hasEmail: hasEmail,
 
             getFriendsById: getFriendsById,
@@ -22,7 +22,6 @@
 
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser
-
         };
 
         return api;
@@ -36,7 +35,7 @@
             return deferred.promise;
         }
 
-        function getIdByUsername(username) {
+        function hasUsername(username) {
             var deferred = $q.defer();
             $http.get("/api/userService/user/id/" + username)
                 .success(function (response) {
@@ -44,7 +43,6 @@
                 });
             return deferred.promise;
         }
-
 
         function getUserById(userId) {
             var deferred = $q.defer();
@@ -92,7 +90,6 @@
         }
 
 
-
         //friends functions
         function getFriendsById(userId) {
             var deferred = $q.defer();
@@ -103,10 +100,10 @@
             return deferred.promise;
         }
 
-
-        function addFriend(userId, friendId) {
+        function addFriend(userId, username, friendId, friendUsername) {
             var deferred = $q.defer();
-            $http.post("/api/userService/user/" + userId + "/friend/" + friendId)
+            var friendPair = {userId: userId, username: username, friendId: friendId, friendUsername: friendUsername};
+            $http.post("/api/userService/user/" + userId + "/friend/" + friendId, friendPair)
                 .success(function (response) {
                     deferred.resolve(response);
                 });
@@ -130,8 +127,6 @@
                 });
             return deferred.promise;
         }
-
-
 
     }
 

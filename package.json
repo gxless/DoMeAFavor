@@ -23,9 +23,18 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
     "express": "~3.4.4",
-    "node-uuid": "^1.4.7"
+    "express-session": "^1.13.0",
+    "fs": "0.0.2",
+    "mongoose": "^4.4.12",
+    "multer": "^1.1.0",
+    "node-uuid": "^1.4.7",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "q": "^1.4.1"
   },
   "devDependencies": {},
   "bundleDependencies": [],

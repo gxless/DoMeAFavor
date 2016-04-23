@@ -7,13 +7,13 @@
                 <div ng-show="hasFriend">
                     <span class="lead">You have no friends now..</span>
                 </div>
-                <div ng-repeat="friend in friends" class="col-sm-4 col-xs-6">
+                <div ng-repeat="friend in friends | filter:{isFriend:true}" class="col-sm-4 col-xs-6">
                     <div class="friendPhotoWrapper">
                         <img src="./images/profilePhoto.png" class="friendPhoto" alt="profile photo">
                         <p class="text-center text-info friendPhotoText">
-                            <a href="#/{{friend.friendId}}/favors">{{friend.friend}}</a>
+                            <a href="#/{{friend.userId}}/favors">{{friend.username}}</a>
                         </p>
-                        <span ng-show="hasAccess" ng-click="unFriend(friend, $index)" class="glyphicon glyphicon-remove-circle"></span>
+                        <span ng-show="hasAccess" ng-click="unFriend(friend.userId, $index)" class="glyphicon glyphicon-remove-circle"></span>
                     </div>
                 </div>
 

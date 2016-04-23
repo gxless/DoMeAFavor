@@ -6,11 +6,13 @@
 
     function FavorController($scope, $location, $routeParams, $anchorScroll, UserService, ReportService, FavorService, CommentService) {
 
-        var favorId = $routeParams.favorId;
-        var viewedUserId = $routeParams.userId;
         $scope.hasAccess = false;
         $scope.adminFavor = false;
+        $scope.hasJoined = false;
+        var favorId = $routeParams.favorId;
+        var viewedUserId = $routeParams.userId;
         var currentUser = UserService.getCurrentUser();
+
 
         //initialize to display favors based on users' identities
         if(currentUser) {
@@ -19,10 +21,6 @@
             //whether viewed user is logged in user
             if(userId == viewedUserId) {
                 $scope.hasAccess = true;
-                //whether logged in user is coordinator
-                if(!currentUser.volunteer) {
-                    $scope.adminFavor = true;
-                }
             }
         }
 
@@ -31,29 +29,27 @@
         FavorService.getFavorById(favorId)
             .then(function (response) {
                 $scope.favor = response;
+                if(currentUser) {
+                    if(currentUser._id == response.coordinatorId) {
+                        $scope.adminFavor = true;
+                    }
+                    for(var i in response.joinedUsers) {
+                        if(currentUser._id == response.joinedUsers[i].userId
+                            && response.joinedUsers[i].joined == true) {
+                            $scope.hasJoined = true;
+                            break;
+                        }
+                    }
+                }
             });
 
         ReportService.getReportByIds(favorId, viewedUserId)
             .then(function (response) {
-                $scope.reports = response;
-            });
-
-        FavorService.getJoinedUsersById(favorId)
-            .then(function (response) {
-                $scope.joinedUsers = response;
+                $scope.reports = response.reverse();
             });
 
 
         //coordinate edit join request
-        if(currentUser) {
-            FavorService.hasJoined(userId, favorId)
-                .then(function (response) {
-                    $scope.hasJoined = response;
-                });
-        }
-
-
-
         $scope.agreeJoin = agreeJoin;
         $scope.rejectJoin = rejectJoin;
         $scope.joinFavor = joinFavor;
@@ -61,28 +57,14 @@
         function agreeJoin(userId) {
             FavorService.agreeJoin(favorId, userId)
                 .then(function (response) {
-                    if(response) {
-                        for(var i in $scope.joinedUsers) {
-                            if($scope.joinedUsers[i].userId == userId) {
-                                $scope.joinedUsers[i].joined = true;
-                                break;
-                            }
-                        }
-                    }
+                    $scope.favor.joinedUsers = response;
                 });
         }
 
         function rejectJoin(userId) {
             FavorService.rejectJoin(favorId, userId)
                 .then(function (response) {
-                    if(response) {
-                        for(var i in $scope.joinedUsers) {
-                            if($scope.joinedUsers[i].userId == userId) {
-                                $scope.joinedUsers.splice(i, 1);
-                                break;
-                            }
-                        }
-                    }
+                    $scope.favor.joinedUsers = response;
                 });
         }
 
@@ -93,15 +75,15 @@
                 FavorService.hasRequest(userId, favorId)
                     .then(function (response) {
                         if (!response) {
-                            FavorService.joinFavor(favorId, userId)
+                            FavorService.joinFavor(favorId, userId, currentUser.username)
                                 .then(function (response) {
-                                    var newJoinedUser = response;
-                                    $scope.joinedUsers.push(newJoinedUser);
+                                    $scope.joinedUsers = response;
                                 });
                         }
                     });
             }
         }
+
 
         //new report section including create report, show new post and disJoin favor
         $scope.newPost = false;
@@ -122,7 +104,7 @@
         }
 
         function disjoin() {
-            FavorService.rejectJoin(favorId, userId)
+            FavorService.disJoin(favorId, currentUser._id)
                 .then(function (response) {
                     if(response) {
                         $location.url("/" + userId + "/favors");
@@ -172,7 +154,6 @@
             $scope.editContent = null;
         }
 
-
         function updateReport(index, report) {
             if(report.content) {
                 ReportService.updateReportById(report)
@@ -203,12 +184,20 @@
         $scope.getLiteralDate = getLiteralDate;
         $scope.getLiteralTime = getLiteralTime;
 
-
-
         function getLiteralDate(dateString) {
             var date = new Date(dateString);
             var dateOri = date.toDateString();
-            var dateLiteral = dateOri.substring(4, 7) + ". " + date.getDate() + ", " + date.getFullYear();
+            var time = new Date(dateString);
+            var hours = time.getHours();
+            var minutes = time.getMinutes();
+            if(hours < 10) {
+                hours = "0" + hours;
+            }
+            if(minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            var dateLiteral = dateOri.substring(4, 7) + ". " + date.getDate() + ", " + date.getFullYear()
+                + " at " + hours + ":" + minutes;
             return dateLiteral;
         }
 
@@ -234,6 +223,7 @@
         var hostId = $routeParams.userId;
         var currentCommentId = null;
         var currentReplyHostId = null;
+        var currentReplyHost = null;
         var selectedCommentIndex = null;
         $scope.isReply = false;
         $scope.commentPlaceholder = "leave a comment to this favor..";
@@ -241,7 +231,7 @@
 
         CommentService.getCommentByIds(favorId, hostId)
             .then(function (response) {
-                $scope.comments = response;
+                $scope.comments = response.reverse();
             });
 
         $scope.makeComment = makeComment;
@@ -257,6 +247,7 @@
                 selectedCommentIndex = commentIndex;
                 currentCommentId = angular.copy(commentId);
                 currentReplyHostId = angular.copy(replyHostId);
+                currentReplyHost = angular.copy(replyHost);
                 $scope.commentPlaceholder = "reply to " + replyHost + "..";
                 $scope.commentBtnText = "Reply";
                 $anchorScroll("anchor");
@@ -280,7 +271,9 @@
                     if(comment) {
                         var newReply = {
                             "replierId": currentUser._id,
+                            "replier": currentUser.username,
                             "hostId": currentReplyHostId,
+                            "host": currentReplyHost,
                             "date": new Date().toString(),
                             "content": comment
                         };
@@ -303,6 +296,7 @@
                             "favorId": favorId,
                             "hostId": hostId,
                             "commenterId": currentUser._id,
+                            "commenter": currentUser.username,
                             "content": comment,
                             "replies":[]
                         };

@@ -3,27 +3,23 @@
     <div class="row primaryContent">
         <div class="col-xs-12 noPadding">
             <div class="alert alert-info">
-                <h4>For Testing This Website</h4>
-                <p>Please either register or use registered user <b>{username: aliceC, password: alice}</b>
-                    or <b>{username: bobV, password: bob}</b> to log in.
+                <h4>For Grading This Assignment (Project 4: Project Implementation")</h4>
+                <p>Please use pre-registered user <b>{username: alice, password: alice}</b>
+                    or <b>{username: bob, password: bob}</b> to log in.
                 </p>
-                <p>This platform is used to connect nonprofit organizations to volunteers. It has two kinds of users.
-                    User "aliceC" is the coordinator user whose name is alice, user "bobV" is the volunteer user whose
-                    name is bob. Coordinator users are able to create favors and edit favor requests from volunteers, and
-                    volunteer users could join favors and post the related reports during the time they are doing their
-                    volunteer work.</p>
-                <p>During your login time, please <b>DO NOT</b> refresh the page. I will implement Passport.js later to keep
-                the user login after refreshing.</p>
-
+                <p>User "alice" is the coordinator user whose name is alice, while user "bob" is the volunteer user whose
+                name is bob. Coordinator users are able to create favors and edit favor requests from volunteers, and
+                volunteer users could join favors and post the related reports during the time they are doing their
+                volunteer work.</p>
                 <br/>
+                <p>Project Website URL: <a href="http://domeafavor-xianggao.rhcloud.com">http://domeafavor-xianggao.rhcloud.com</a></p>
+                <p>GitHub Repository URL: <a href="https://github.com/hitgxless/DoMeAFavor">https://github.com/hitgxless/DoMeAFavor</a></p>
+                <p>Project Proposal URL: <a href="https://docs.google.com/document/d/1O59aY5pIMi2WOBnDj88AV4Lsswy7bUmtQr8T_rDe5sw/edit#heading=h.kjide6q1jx2f">
+                    https://docs.google.com/document/d/1O59aY5pIMi2WOBnDj88AV4Lsswy7bUmtQr8T_rDe5sw/edit#heading=h.kjide6q1jx2f</a></p>
+                <p>Google Hangout video URL: <a href="https://plus.google.com/events/cjj13v37ffjfnaeaqbkd98h0dh0">https://plus.google.com/events/cjj13v37ffjfnaeaqbkd98h0dh0</a> </p>
+                <p>Assignment Website URL: <a href="http://webdev2016-xianggao.rhcloud.com">http://webdev2016-xianggao.rhcloud.com</a></p>
+
             </div>
-            <div class="alert alert-info">
-                <p class=""><strong>More Info:</strong><br />
-                    Personal Blog: <a href="http://blog-gxless.rhcloud.com">http://blog-gxless.rhcloud.com</a><br />
-                    DoMeAFavor Website: <a href="http://domeafavor-gxless.rhcloud.com/">http://domeafavor-gxless.rhcloud.com/</a><br />
-                    FormBuilder Website: <a href="http://formbuilder-gxless.rhcloud.com/">http://formbuilder-gxless.rhcloud.com/</a><br />
-                    Github: <a href="https://github.com/gxless/DoMeAFavor">https://github.com/gxless/DoMeAFavor</a>
-                </div>
         </div>
     </div>
 
@@ -39,7 +35,7 @@
         </div>
     </div>
 
-    <div ng-repeat="favor in favors | orderBy:'favor.date':true" class="row primaryContent">
+    <div ng-repeat="favor in favors" class="row primaryContent">
         <div class="col-xs-12 noPadding">
             <h3>{{favor.title}} &nbsp;
                 <a href="#/{{favor.coordinatorId}}/favors/{{favor._id}}" class="btn tagBtn"></span> View</a>
