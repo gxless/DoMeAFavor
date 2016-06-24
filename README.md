@@ -14,7 +14,6 @@ So I am thinking to build a platform to help the volunteer organization post the
 
 
 ### Current Progress
-* Bug fixes
 * Add new features
 
 
